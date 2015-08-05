@@ -43,6 +43,23 @@ let app = markoa.server.configure(koa(), {
 
 By default the koa server will use port `4000` if no settings are provided.
 
+### App container
+
+You can use the Configurator to configure multiple apps to be mounted on the App Container.
+
+```js
+let appConfigurator = new appContainer.configurator(__dirname, ['account', 'projects']);
+appConfigurator.mountApps();
+```
+
+You can customize the configurator as needed, then call `mountApps` with the list of apps you wish to mount on the app container.
+
+```js
+let appConfigurator = new appContainer.configurator(__dirname);
+appConfigurator.pageData = myPageDataFn;
+appConfigurator.mountApps('projects', 'teams']);
+```
+
 Local testing
 -------------
 
