@@ -60,11 +60,13 @@ The default (implied) app structure. For any custom app structure, you must supp
       /project-feed
         template.marko
     /layouts
-      _page.jade
+      _mobile.jade
     /state
       index.js
     /page
       index.jade
+      _index-layout.jade
+      _index-layout.marko
       index.marko
       index.browser.json
     marko-taglib.json
@@ -74,27 +76,59 @@ The default (implied) app structure. For any custom app structure, you must supp
   marko-taglib.json  
 ```
 
-### App container
+### App
 
-You can use the Configurator to configure multiple apps to be mounted on the App Container.
+An `App` is simply an Object with a specific structure that defines where or how specific "endpoints" of the app can be retrieved, such as the main page template and the page state of the app. An app can also contribute to the global state via the special `$global` entry. There are several ways to create an app:
 
 ```js
-// list of apps in /apps folder you wish to mount
-let apps = ['projects', 'teams'];
-let appConfigurator = new appContainer.configurator(__dirname, apps);
-appConfigurator.mountApps();
+let app = {
+  rootPath: __dirname,
+  page: {
+    state: {
+      page: function(name, config) {},
+      $global: function(name, config) {}
+    },
+    template: function(name) {
+      return 'path/to/template';
+    }
+  }
+};
+
+let config = {rootPath: __dirname, page: {template: 'path/to/template' }}
+let myApp = new markoa.app.create(name, config);
 ```
+
+### App container
+
+You can mount one or more apps directly on your `AppContainer`
+
+```js
+let AppContainer = markoa.AppContainer;
+let myAppContainer = new AppContainer(koaApp); //.start();
+myAppContainer.mount.app(app);
+```
+
+### App configurator
+
+You can use the `AppConfigurator` to configure multiple apps to be mounted on an `AppContainer`. The `AppConfigurator` uses config objects to mount an app using either default stretegies for resolving the main page template and state of each app, or custom strategies you supply.
 
 You can customize the configurator as needed, then call `mountApps` with the list of apps you wish to mount on the app container.
 
 ```js
-let markoa = ('markoa');
-let appConfigurator = new markoa.appContainer.configurator(__dirname);
-// do some custom config of appConfigurator here
-// ...
-// list of apps in /apps folder you wish to mount
-let apps = ['projects', 'teams'];
-appConfigurator.mountApps(apps);
+let lassoFile = path.join(__dirname, './lasso-config.json');
+let serverOpts = {port: 4005, lassoFile: lassoFile};
+let koaApp = new Server(serverOpts).init(function(mws) {
+  // configure koa middleware
+  mws.minimal();
+});
+
+let appConfigurator = new markoa.AppConfigurator(__dirname);
+let appMounter = appConfigurator.create(koaApp, appContainer);
+appMounter.page = myPage; // set custom page strategy
+
+let apps = ['project', 'repository'];
+// mounting multiple apps on appContainer instance
+appMounter.mountApps(apps);
 ```
 
 Local testing
