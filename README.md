@@ -43,6 +43,60 @@ let app = markoa.server.configure(koa(), {
 
 By default the koa server will use port `4000` if no settings are provided.
 
+### App file structure
+
+The default (implied) app structure. For any custom app structure, you must supply your own `findTemplate` and `pageData` functions in the app `config` Object when mounting your apps.
+
+```sh
+/apps
+  /_global
+    /components
+    /state
+      index.js
+    /layouts
+      _default_page.jade
+  /index
+    /components
+      /project-feed
+        template.marko
+    /layouts
+      _page.jade
+    /state
+      index.js
+    /page
+      index.jade
+      index.marko
+      index.browser.json
+    marko-taglib.json
+  /repositories
+  /teams
+  ...
+  marko-taglib.json  
+```
+
+### App container
+
+You can use the Configurator to configure multiple apps to be mounted on the App Container.
+
+```js
+// list of apps in /apps folder you wish to mount
+let apps = ['projects', 'teams'];
+let appConfigurator = new appContainer.configurator(__dirname, apps);
+appConfigurator.mountApps();
+```
+
+You can customize the configurator as needed, then call `mountApps` with the list of apps you wish to mount on the app container.
+
+```js
+let markoa = ('markoa');
+let appConfigurator = new markoa.appContainer.configurator(__dirname);
+// do some custom config of appConfigurator here
+// ...
+// list of apps in /apps folder you wish to mount
+let apps = ['projects', 'teams'];
+appConfigurator.mountApps(apps);
+```
+
 Local testing
 -------------
 
