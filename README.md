@@ -126,12 +126,14 @@ let koaApp = new Server(serverOpts).init(function(mws) {
 appContainer.join(otherAppContainer);
 
 let appConfigurator = new markoa.AppConfigurator(__dirname);
-let appMounter = appConfigurator.create(koaApp, appContainer);
+let appMounter = appConfigurator.create(appContainer);
 appMounter.page = myPage; // set custom page strategy
 
 let apps = ['project', 'repository'];
 // mounting multiple apps on appContainer instance
-appMounter.mountApps(apps).createRoutes();
+appMounter.mountApps(apps);
+// creates routes for all apps in container and starts server
+appContainer.start(koaApp);
 ```
 
 Local testing
