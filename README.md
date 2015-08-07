@@ -103,9 +103,9 @@ let myApp = new markoa.app.create(name, config);
 You can mount one or more apps directly on your `AppContainer`
 
 ```js
-let AppContainer = markoa.AppContainer;
-let myAppContainer = new AppContainer(koaApp); //.start();
-myAppContainer.mount.app(app);
+let myApp = new markoa.App('project', projConfig);
+let myAppContainer = new markoa.AppContainer(koaApp); //.start();
+myAppContainer.mount.app(myApp);
 ```
 
 ### App configurator
@@ -125,13 +125,12 @@ let koaApp = new Server(serverOpts).init(function(mws) {
 // merge apps (app configurations) from another AppContainer
 appContainer.join(otherAppContainer);
 
-let appConfigurator = new markoa.AppConfigurator(__dirname);
-let appMounter = appConfigurator.create(appContainer);
-appMounter.page = myPage; // set custom page strategy
+let appConfigurator = new markoa.AppConfigurator(appContainer, {rootPath: __dirname});
+appConfigurator.App = myApp; // set custom App strategy
 
 let apps = ['project', 'repository'];
 // mounting multiple apps on appContainer instance
-appMounter.mountApps(apps);
+appConfigurator.mountApps(apps);
 // creates routes for all apps in container and starts server
 appContainer.start(koaApp);
 ```
