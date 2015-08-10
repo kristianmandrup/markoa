@@ -135,6 +135,14 @@ appConfigurator.mountApps(apps);
 appContainer.start(koaApp);
 ```
 
+### App state
+
+An `/apps` folder being mounted, can contribute to the global state of the app container where it mounts. You should have a file `apps/_global/state.js` or `apps/_global/state/index.js` which returns an Object or a function of the form `function(name, config)`, where name is the name of the current app trying to access global state and config is a config object.
+
+Each app on its own should also have a state, such as for the `index` app, either: `apps/index/state.js` or `apps/index/state/index.js` adhering to the same rules as for global state.
+
+For more advanced scenarios, you can even provide different state for each environment: `development`, `test` and `production`, simply by having top level state object keys for each such environment you wish to support. You can provide a `default:` key for default state for environment not defined, if none of these keys are found it will default to retrieve the entire state.
+
 Local testing
 -------------
 
