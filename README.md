@@ -125,14 +125,24 @@ let koaApp = new Server(serverOpts).init(function(mws) {
 // merge apps (app configurations) from another AppContainer
 appContainer.join(otherAppContainer);
 
-let appConfigurator = new markoa.AppConfigurator(appContainer, {rootPath: __dirname});
-appConfigurator.App = myApp; // set custom App strategy
+// container is optional. If not supplied, a new one will be created
+let appConfigurator = new markoa.AppConfigurator({rootPath: __dirname, container: appContainer});
 
 let apps = ['project', 'repository'];
 // mounting multiple apps on appContainer instance
 appConfigurator.mountApps(apps);
 // creates routes for all apps in container and starts server
 appContainer.start(koaApp);
+```
+
+### App Mounter
+
+For the simplest cases, simply use the `AppMounter` like this:
+
+```js
+var mounter = new markoa.AppMounter(__dirname);
+mounter.mountApps(apps);
+mounter.appContainer.start(koaApp);
 ```
 
 ### App state
