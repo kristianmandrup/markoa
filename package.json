@@ -1,6 +1,6 @@
 {
   "name": "marooka",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Marooka: Serving Content in Koajs with Marko",
   "main": "index.js",
   "scripts": {
