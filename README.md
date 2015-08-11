@@ -19,6 +19,8 @@ let server = markoa.server
 let utils = markoa.utils
 ```
 
+`npm install koa koa-body-parser koa-compress koa-router koa-static lasso lasso-marko marko-layout --save`
+
 Server
 ------
 
