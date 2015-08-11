@@ -1,12 +1,28 @@
 {
   "name": "marooka",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Marooka: Serving Content in Koajs with Marko",
   "main": "index.js",
+  "homepage": "https://github.com/kristianmandrup/markoa",
+  "author": {
+    "name": "Kristian Mandrup",
+    "email": "kmandrup@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/kristianmandrup/markoa.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kristianmandrup/markoa/issues"
+  },
+  "main": "index.js",
+  "engines": {
+    "node": ">= 0.11.0",
+    "npm": ">=1.4.3"
+  },
   "scripts": {
     "test": "mocha"
   },
-  "author": "Kristian Mandrup",
   "keywords": [
     "koajs",
     "Marko",
