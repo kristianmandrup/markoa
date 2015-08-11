@@ -1,7 +1,7 @@
 {
-  "name": "markoa",
+  "name": "marooka",
   "version": "0.0.1",
-  "description": "Markoa: Serving Content in Koajs with Marko",
+  "description": "Marooka: Serving Content in Koajs with Marko",
   "main": "index.js",
   "scripts": {
     "test": "mocha"
