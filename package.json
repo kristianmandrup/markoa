@@ -25,7 +25,7 @@
   },
   "keywords": [
     "koajs",
-    "Marko",
+    "marko",
     "nodejs"
   ],
   "authors": [
@@ -45,7 +45,6 @@
     "supertest": "^0.15.0"
   },
   "dependencies": {
-    "": "^1.2.6",
     "axios": "^0.5.4",
     "bluebird": "^2.7.1",
     "browser-refresh-taglib": "^1.0.3",
@@ -60,7 +59,7 @@
     "koa-static": "^1.4.9",
     "lasso": "^1.10.2",
     "lasso-marko": "^2.0.4",
-    "marko": "github:marko-js/marko",
+    "marko": "^2.7.9",
     "marko-layout": "^2.0.1",
     "moment": "^2.10.3"
   },
