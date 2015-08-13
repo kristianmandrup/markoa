@@ -1,6 +1,6 @@
 {
   "name": "marooka",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Marooka: Serving Content in Koajs with Marko",
   "main": "index.js",
   "homepage": "https://github.com/kristianmandrup/markoa",
