@@ -163,3 +163,9 @@ Run `npm link` from markoa root folder to link the package.
 Then from an app or appContainer that uses markoa, use `npm link markoa` to link the dependency, which creates a symbolic link in your `node_modules` pointing to your local markoa package.
 
 Now run `npm install` from your app ;)
+
+### Widget dependency mamagement for client app
+
+See the new `Components` and `Lasso`.
+
+Components can generate registries of Components for the app (global, per app). It can also be used to uncover which tags are in fact Widgets and store them in a `widgets.json` file for each app. This can file can then be used as input to generate an `[app-name].browser.json` for each app with all widget dependencies *auto-magically* pre-configured!!!
