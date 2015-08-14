@@ -93,14 +93,22 @@ var parser = new htmlparser.Parser({
 }, {decodeEntities: false});
 ```
 
-Then merge this with the browser.json
+Then merge this with the `browser.json`
 
-var browjson = require('./browser.json'); var widgetsJson = require(appWidgetsFilePath) var widgetDeps = []; for (var key in Object.keys(widgetsJson)) widgetDeps.push(widgetsJson[key]);
+```js
+var browjson = require('./browser.json');
+var widgetsJson = require(appWidgetsFilePath)
+var widgetDeps = [];
+for (var key in Object.keys(widgetsJson))
+  widgetDeps.push(widgetsJson[key]);
 
 widgetDeps = widgetDeps.map(function(dep) { return `require: ${dep}`; });
-
 browjson.dependencies.push(widgetDeps);
-
-writeJsonFile(appBrowserFilePath, browjson);\`\`\`
+writeJsonFile(appBrowserFilePath, browjson);
+```
 
 Super!!!
+
+### Last but not least!!!
+
+Proper global state! The `out.$global` should be available for all tags!!!
