@@ -1,6 +1,6 @@
 {
   "name": "marooka",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Marooka: Serving Content on Koa server with Marko and Lasso",
   "main": "index.js",
   "homepage": "https://github.com/kristianmandrup/markoa",
@@ -63,7 +63,7 @@
     "koa-static": "^1.4.9",
     "lasso": "^1.10.2",
     "lasso-marko": "^2.0.4",
-    "marko": "^2.7.9",
+    "marko": "^2.7.15",
     "marko-layout": "^2.0.1",
     "moment": "^2.10.3",
     "node-dir": "^0.1.8"
