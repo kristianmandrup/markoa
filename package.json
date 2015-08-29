@@ -63,7 +63,7 @@
     "koa-static": "^1.4.9",
     "lasso": "^1.10.2",
     "lasso-marko": "^2.0.4",
-    "marko": "^2.7.15",
+    "marko": "^2.7.17",
     "marko-layout": "^2.0.1",
     "moment": "^2.10.3",
     "node-dir": "^0.1.8"
