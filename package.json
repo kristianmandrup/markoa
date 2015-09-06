@@ -48,7 +48,7 @@
     "axios": "^0.5.4",
     "bluebird": "^2.7.1",
     "browser-refresh-taglib": "^1.0.3",
-    "chokidar": "^1.0.5",
+    "chokidar": "paulmillr/chokidar#master",
     "co-views": "^0.2.0",
     "elementtree": "^0.1.6",
     "extend": "^3.0.0",
