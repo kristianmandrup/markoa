@@ -1,49 +1,42 @@
 Markoa
 ======
 
+Note: This project is referenced as `marooka` since `markoa` was already taken on `npm`.
+
 Markoa consists of the following main parts:
 
 -	app
+-	app configurator
 -	app container
+-	app mounter
+-	components
+-	config
 -	server
+-	templates
 -	utils
 
-To access each part, simply use the main `markoa` object as follows:
+Use the main `markoa` object as follows:
 
 ```js
 let markoa = require('markoa');
 let app = markoa.app;
-// create new container instance
-let appContainer = markoa.appContainer();
-let server = markoa.server
-let utils = markoa.utils
 ```
 
-`npm install koa koa-body-parser koa-compress koa-router koa-static lasso lasso-marko marko-layout --save`
+See `lib/index` for the full external API.
 
 Server
 ------
 
-It is super simple to setup the Markoa server with some basic settings:
+It is super simple to mount a basic app on Markoa if it follows conventions.
 
 ```js
-let marko  = require('markoa');
-let lassoFile = path.join(__dirname, './lasso-config.json');
-let staticDir = path.join(__dirname, '../public');
-let app = markoa.server.configure(koa(), {
-  port: 4004,
-  lasso: {
-    file: lassoFile,
-  },
-  static: {
-    dir: staticDir
-    debug: true,
-    force: true
-  }
-});
+let marooka = require('marooka')
+let apps = ['index', 'projects', 'login']
+let rootPath = __dirname
+module.exports = new marooka.AppMounter(rootPath).mountApps(apps).start();
 ```
 
-By default the koa server will use port `4000` if no settings are provided.
+By default the koa server will use port `4000` if no extra settings are provided.
 
 ### App file structure
 
@@ -55,12 +48,16 @@ The project file structure should look as follows.
 /apps
   /_global
     /components - custom taglibs and tags
-      /feed
-        /project-feed
-          marko-tag.json
-          renderer.js
-          template.jade
-          template.marko
+      /tags
+        /feed
+          /project-feed
+            marko-tag.json
+            renderer.js
+            template.jade
+            template.marko
+        marko-taglib.json
+      /widgets
+        marko-taglib.json
       marko-taglib.json
 
     /data - state available to all apps as $out.global
@@ -71,22 +68,6 @@ The project file structure should look as follows.
         ...
       /feeds
         index.js
-        /activity
-          ...
-      /forms
-        index.js
-        project.js        
-        ...
-      /menus
-        index.js
-        main.js
-        session.js
-        ...
-      /lists
-        index.js
-        users.js
-        repos.js
-        ...      
 
     /layouts - generic layouts
       layout.jade
@@ -94,7 +75,8 @@ The project file structure should look as follows.
       list-layout.jade
 
   /index - app
-    /components
+    meta.js  - app meta data
+    /components - app specific components
       marko-taglib.json
 
     /layouts - special page layouts
@@ -115,6 +97,8 @@ The project file structure should look as follows.
     marko-taglib.json
 
   /repositories - app
+    meta.js
+    ...
   /teams - app
   ...
 marko-taglib.json  
@@ -133,13 +117,16 @@ This generator will create an app under `apps/[app-name]` similar to the default
 ```sh
 /[app]
   /components
-    /project-feed
-      template.marko
+    /tags
+      /project-feed
+        template.jade
+        ...
   /layouts
     base.jade
   /data
     index.js
   /page
+    meta.js
     app.jade
     app.marko
     /dependencies
@@ -151,7 +138,7 @@ This generator will create an app under `apps/[app-name]` similar to the default
 
 *TODO: WIP*
 
-Sometimes an app contains sub pages. To support this, markoa should be able to understand how to mount sub-routes for a given app.
+Sometimes an app contains sub pages. To support this, markoa should be able to understand how to mount sub-routes for a given app. Only two levels are allowed and possible at this point.
 
 ```
 /users
@@ -285,7 +272,7 @@ Or even shorter:
 ```js
 app: 'list'
 pages: 'list'
-``
+```
 
 ### App
 
@@ -358,7 +345,7 @@ mounter.appContainer.start(koaApp);
 
 ### App state
 
-An `/apps` folder being mounted, can contribute to the global state of the app container where it mounts. You should have a file `apps/_global/state.js` or `apps/_global/state/index.js` which returns an Object or a function of the form `function(name, config)`, where name is the name of the current app trying to access global state and config is a config object.
+An `/apps` folder being mounted, can contribute to the global state of the app container where it mounts. You should have a file `apps/_global/data.js` or more typically `apps/_global/data/index.js` which returns an Object or a function of the form `function(name, config)`, where name is the name of the current app trying to access global state and config is a config object.
 
 Each app on its own should also have a state, such as for the `index` app, either: `apps/index/state.js` or `apps/index/state/index.js` adhering to the same rules as for global state.
 
@@ -373,8 +360,12 @@ Then from an app or appContainer that uses markoa, use `npm link markoa` to link
 
 Now run `npm install` from your app ;)
 
-### Widget dependency mamagement for client app
+### Widget dependency management for client app
 
-See the new `Components` and `Lasso`.
+See the new `lib/components` folder
 
 Components can generate registries of Components for the app (global, per app). It can also be used to uncover which tags are in fact Widgets and store them in a `widgets.json` file for each app. This can file can then be used as input to generate an `[app-name].browser.json` for each app with all widget dependencies *auto-magically* pre-configured!!!
+
+### Server Templates
+
+The `lib/templates` folder contains a script which can compile Marko templates into Liquid templates for use on the server.
