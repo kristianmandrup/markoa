@@ -196,6 +196,33 @@ When the page `users/details` is rendered, it will get the data:
 }
 ```
 
+### App Meta data and inheritance
+
+An app folder can contain a `meta.js` file to define meta data for the app.
+
+```js
+module.exports = {
+  type: 'item', // or: home, list, ...
+  form: true, // if it contains a form to edit the item
+  page: {
+    // type: 'item',
+    app: 'item' // app to use for page if no page found here
+  },
+  data: {
+    // type: 'item',
+    // app: 'item' app to use as data source if no data here
+  }
+}
+```
+
+#### Inheritance and reuse
+
+The meta data can be used to indicate which apps to fall back to (inherit from) for the template and data used so as to reuse from other apps and thus minimize duplication.
+
+#### Stats
+
+The meta data can also be used to gather stats about the app in aggregate, f.ex to list all the apps that display lists, have forms etc.
+
 ### App
 
 An `App` is simply an Object with a specific structure that defines where or how specific "endpoints" of the app can be retrieved, such as the main page template and the page state of the app. An app can also contribute to the global state via the special `$global` entry. There are several ways to create an app:
