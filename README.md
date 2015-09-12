@@ -193,6 +193,7 @@ An app folder can contain a `meta.js` file to define meta data for the app.
 module.exports = {
   type: 'item', // or: home, list, ...
   form: true, // if it contains a form to edit the item
+  inherit: 'item', // app to inherit from for all
   page: {
     // type: 'item',
     app: 'item' // app to use for page if no page found here
