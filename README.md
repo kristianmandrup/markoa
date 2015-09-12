@@ -223,6 +223,70 @@ The meta data can be used to indicate which apps to fall back to (inherit from) 
 
 The meta data can also be used to gather stats about the app in aggregate, f.ex to list all the apps that display lists, have forms etc.
 
+### Using App inheritance
+
+Let's say we have global data:
+
+```js
+lists: {
+  projects: [...],
+  teams: [...]
+}
+```
+
+Ideally we would like to have this global data available for reference but also to reuse this data at the app level as local data. To enable this, each local `/data` folder has a `global.js` which exports all the global data which can then be referenced locally as follows.
+
+```js
+var _ = require('./global');
+module.exports = {
+  // See global data, lists/projects
+  // out.global.lists.projects
+  page: {
+    name: 'projects',
+    title: 'Projects',
+    list: _.lists.projects;
+  }
+}
+```
+
+So here we set up a local generic `list` to point to the global data `list.projects`. This can then be passed to whatever list generator which knows how to populate and render a given type of list. Magic!
+
+Using this approach, any app which which displays a model or list using the same renderer, can be set up to inherit from a generic app which handles it.
+
+```js
+module.exports = {
+  type: 'list',
+  page: {
+    app: 'list'
+    pages: {
+      details: {
+        app: 'list/details'
+      },
+      feed: {
+        app: 'list/feed'
+      }      
+    }
+  }
+}
+```
+
+Since this pattern is so common you can do the shorthands:
+
+```js
+app: 'list'
+pages: {
+  details: {
+    app: ':details'
+  },
+```
+
+Or even shorter:
+
+```js
+app: 'list'
+pages: 'list'
+``
+
 ### App
 
 An `App` is simply an Object with a specific structure that defines where or how specific "endpoints" of the app can be retrieved, such as the main page template and the page state of the app. An app can also contribute to the global state via the special `$global` entry. There are several ways to create an app:
