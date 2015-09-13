@@ -1,31 +1,12 @@
 Markoa
 ======
 
-Note: This project is referenced as `marooka` since `markoa` was already taken on `npm`.
+*Note: This project is referenced as `marooka` since `markoa` was already taken on `npm`*
 
-Markoa consists of the following main parts:
+Markoa is a Full stack framework (mostly backend), for rapid prototyping of applications using mock data that can easily be replaced with real data sources etc.
 
--	app
--	app configurator
--	app container
--	app mounter
--	components
--	config
--	server
--	templates
--	utils
-
-Use the main `markoa` object as follows:
-
-```js
-let markoa = require('markoa');
-let app = markoa.app;
-```
-
-See `lib/index` for the full external API.
-
-Server
-------
+Mounting apps
+-------------
 
 It is super simple to mount a basic app on Markoa if it follows conventions.
 
@@ -289,6 +270,29 @@ Or even shorter:
 app: 'list'
 pages: 'list' // or 'inherit' to use same inheritance as app
 ```
+
+### Markoa Internals
+
+Markoa consists of the following main parts:
+
+-	app
+-	app configurator
+-	app container
+-	app mounter
+-	components
+-	config
+-	server
+-	templates
+-	utils
+
+Use the main `markoa` object as follows:
+
+```js
+let markoa = require('markoa');
+let app = markoa.app;
+```
+
+See `lib/index` for the full external API.
 
 ### App
 
