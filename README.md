@@ -164,17 +164,31 @@ module.exports = {
   meta: require('./meta'),
   data: require('./data'),
   apps: require('./apps'),
-  methods: {
-    post: function*(next) {
-      console.log('POST');
-      yield next;
-    },
-    update: function*(next) {
+  methods: require('./methods'),
+};
+```
+
+Define your REST-like methods:
+
+```js
+/*jslint node: true */
+'use strict';
+methods: {
+  post: function*(next) {
+    console.log('POST');
+    yield next;
+  },
+  update: {
+    '.': function*(next) {
       console.log('UPDATE');
       yield next;
-    }
+    },
+    ':id': function*(next) {
+      console.log('UPDATE by id:', this.id);
+      yield next;
+    },
   }
-};
+}
 ```
 
 The `methods` entry allows you to define REST endpoints for mutation actions such as:
@@ -211,7 +225,11 @@ This is easily done since: *"Named route parameters are captured and added to ct
 module.exports = {
   '.': 'app',
   ':id': 'item',
-  '/list/:id': 'list'  
+  '/list/:id': function(name, config) {
+    // Note: Page data is available via config, which includes params etc.
+    // Can be used to decide which template to return!
+    return 'list';
+  }
 }
 ```
 
