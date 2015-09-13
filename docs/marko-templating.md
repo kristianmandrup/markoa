@@ -97,7 +97,7 @@ exports.create = function(__helpers) {
       '! ');
 ```
 
-Rapid Render automatically watches all files in the `/views` folder and precompiles them. This makes it easy to debug any templating errors, as you can simply insert debug statements directly into the generated `.js` files to follow what is going on.
+Rapid Render automatically watches all files in the `/views` folder and precompiles them. This makes it easy to debug any templating errors, as you can simply insert debug dataments directly into the generated `.js` files to follow what is going on.
 
 ## Marko Language overview
 

@@ -60,7 +60,7 @@ The project file structure should look as follows.
         marko-taglib.json
       marko-taglib.json
 
-    /data - state available to all apps as $out.global
+    /data - data available to all apps as $out.global
       index.js
       /available
         index.js
@@ -91,9 +91,9 @@ The project file structure should look as follows.
         app.browser.json - lasso config file
         widgets.json
 
-    /data - state for index app, available as $data
+    /data - data for index app, available as $data
       global.js - reuse global data from local app
-      index.js - local state for index app only
+      index.js - local data for index app only
 
     marko-taglib.json
 
@@ -279,13 +279,13 @@ pages: 'list' // or 'inherit' to use same inheritance as app
 
 ### App
 
-An `App` is simply an Object with a specific structure that defines where or how specific "endpoints" of the app can be retrieved, such as the main page template and the page state (data) of the app. An app can also contribute to the global state via the special `$global` entry. There are several ways to create an app:
+An `App` is simply an Object with a specific structure that defines where or how specific "endpoints" of the app can be retrieved, such as the main page template and the page data (data) of the app. An app can also contribute to the global data via the special `$global` entry. There are several ways to create an app:
 
 ```js
 let app = {
   rootPath: __dirname,
   page: {
-    state: {
+    data: {
       page: function(name, config) {},
       $global: function(name, config) {}
     },
@@ -311,7 +311,7 @@ myAppContainer.mount.app(myApp);
 
 ### App configurator
 
-You can use the `AppConfigurator` to configure multiple apps to be mounted on an `AppContainer`. The `AppConfigurator` uses config objects to mount an app using either default stretegies for resolving the main page template and state of each app, or custom strategies you supply.
+You can use the `AppConfigurator` to configure multiple apps to be mounted on an `AppContainer`. The `AppConfigurator` uses config objects to mount an app using either default stretegies for resolving the main page template and data of each app, or custom strategies you supply.
 
 You can customize the configurator as needed, then call `mountApps` with the list of apps you wish to mount on the app container.
 
@@ -346,13 +346,13 @@ mounter.mountApps(apps);
 mounter.appContainer.start(koaApp);
 ```
 
-### App state
+### App data
 
-An `/apps` folder being mounted, can contribute to the global state of the app container where it mounts. You should have a file `apps/_global/data.js` or more typically `apps/_global/data/index.js` which returns an Object or a function of the form `function(name, config)`, where name is the name of the current app trying to access global state and config is a config object.
+An `/apps` folder being mounted, can contribute to the global data of the app container where it mounts. You should have a file `apps/_global/data.js` or more typically `apps/_global/data/index.js` which returns an Object or a function of the form `function(name, config)`, where name is the name of the current app trying to access global data and config is a config object.
 
-Each app on its own should also have a state, such as for the `index` app, either: `apps/index/data.js` or `apps/index/data/index.js` adhering to the same rules as for global state.
+Each app on its own should also have a data, such as for the `index` app, either: `apps/index/data.js` or `apps/index/data/index.js` adhering to the same rules as for global data.
 
-For more advanced scenarios, you can even provide different state for each environment: `development`, `test` and `production`, simply by having top level data object keys for each such environment you wish to support. You can provide a `default:` key for default state for environment not defined, if none of these keys are found it will default to retrieve the entire state (data).
+For more advanced scenarios, you can even provide different data for each environment: `development`, `test` and `production`, simply by having top level data object keys for each such environment you wish to support. You can provide a `default:` key for default data for environment not defined, if none of these keys are found it will default to retrieve the entire data (data).
 
 Local testing
 -------------

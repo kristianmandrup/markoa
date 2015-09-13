@@ -309,12 +309,12 @@ module.exports =  {
 
 ### Generic render
 
-Each route has a `render` function which retrieves the data to render simply by using this data map and retrieving the data for the page name key, ie `data['index']` for the index page. The state is some kind of object or identifier uses to identify the current state of the user such as "logged in" etc. This is used to decide which session (and perhaps other data) to make available for that page.
+Each route has a `render` function which retrieves the data to render simply by using this data map and retrieving the data for the page name key, ie `data['index']` for the index page. The data is some kind of object or identifier uses to identify the current data of the user such as "logged in" etc. This is used to decide which session (and perhaps other data) to make available for that page.
 
 ```js
-function (name, route, state) {
+function (name, route, data) {
   app.get(`/${route || name}`, function *(){
-    render(this, name, data(name, state));
+    render(this, name, data(name, data));
   });
 }
 ```

@@ -29,7 +29,7 @@ In some cases we might have existing dynamic applications (widgets) which we nee
 
 In this case:
 - convert application templates into Marko templates
-- convert application state model into Marko `data` object sent to page template
+- convert application data model into Marko `data` object sent to page template
 - configure Koa data config to use application data providers (Ajax)
 - convert application rendering logic to Marko logic
 - convert application styling to Koa page styling
@@ -41,14 +41,14 @@ Ideally, each page should be rendered with placeholders for either:
 - all the components of a Single Page Application (SPA)
 
 The widget approach can be used for prototyping, but widgets should be aggregated into full SPAs gradually.
-This way each SPA can leverage (reuse) the state model of the page for the Isomorphic page render which is the optimal solution.
+This way each SPA can leverage (reuse) the data model of the page for the Isomorphic page render which is the optimal solution.
 
 ### Models, Views and View-Models
 
 Primitive Data Models can be designed purely as YAML or JSON files by the FE developer. These files are then aggregated into the data model for each page and used in the rendering process by reference via `${}` expressions and `for` loops to iterate/navigate and display the data on the page as needed.
 
-The Views are the pages in form of `.marko` templates and the partials (or custom tags). Each view is given a view model. For the page it is the entire page state, while parts of the page are given relevant parts of the page state to render. It is clear that this approach 
-maps beautifully to a Reactive (full state render) approach such as React (with Virtual DOM) or [Marko widgets](https://github.com/raptorjs/marko-widgets)
+The Views are the pages in form of `.marko` templates and the partials (or custom tags). Each view is given a view model. For the page it is the entire page data, while parts of the page are given relevant parts of the page data to render. It is clear that this approach 
+maps beautifully to a Reactive (full data render) approach such as React (with Virtual DOM) or [Marko widgets](https://github.com/raptorjs/marko-widgets)
 
 ### CSS styles
 

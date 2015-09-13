@@ -6,7 +6,7 @@ Rapid Render will shortly consist of the following modules (packages):
 - rr-app-container
 - rr-base-app
 - rr-server
-- rr-state
+- rr-data
 - rr-utils
 
 ## RR Server
@@ -16,16 +16,16 @@ The RR server is a standalone configuration of a Koa server, with port, middlewa
 ## RR  App Container
 
 The appContainer is a container for mounting individual apps. When an app is mounted, a route is created on the
-RR server for that name with the app state and using the apps findTemplate fucntion to render the marko template.
+RR server for that name with the app data and using the apps findTemplate fucntion to render the marko template.
 
-## RR state
+## RR data
 
 ## RR util
 
 ## Creating and mounting an SPA
 
 An SPA application such as account-app will include rr-base-app to access utility methods to mount the app to
-an app container and to help configure/load the app state.
+an app container and to help configure/load the app data.
 
 It should have an app.js file in the root, which is used for testing the app being mounted in an app container.
 This way the dev can test the app, by mounting it as a single route in a kind of "test environment" not polluted by other apps.
