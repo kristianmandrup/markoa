@@ -217,7 +217,20 @@ This infrastructure change has already been started in App in:
 -	resolver/index.js
 -	resolver/pages/
 
-This needs a bit more work (~2-3 hrs estimate).
+The `app` returned by the `App` constructor, now includes an `apps` entry. If we call `app.apps.sub()` we get the sub apps object for the app.
+
+For the router, we must return a nested set of routers, one for each nested sub app and not a single router!
+
+```js
+var router = function(pageName, config) {
+  log('create routes for app:', pageName);
+  let app = config.app;
+  console.log('routes', app.apps.sub());
+  ...
+}
+
+return router;
+```
 
 ### App Meta data and inheritance
 
