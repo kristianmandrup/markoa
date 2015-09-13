@@ -171,6 +171,41 @@ If an app contains a nested `/apps` folder Markoa will create sub apps that are 
 
 Currently a working example of using this infrastructure can be seen for the project page of [Repo Manager](https://github.com/kristianmandrup/repo-manager-v3)
 
+### REST methods
+
+Each app should have an `index.js` as the entry point to expose the main parts of the app.
+
+```js
+/*jslint node: true */
+'use strict';
+
+module.exports = {
+  meta: require('./meta'),
+  data: require('./data'),
+  apps: require('./apps'),
+  methods: {
+    post: function*(next) {
+      console.log('POST');
+      yield next;
+    },
+    update: function*(next) {
+      console.log('UPDATE');
+      yield next;
+    }
+  }
+};
+```
+
+The `methods` entry allows you to define REST endpoints for mutation actions such as:
+
+-	POST
+-	PUT
+-	DELETE
+
+You can however use more intuitive action names such as: `create`, `update` and `remove` and they will be mapped to the appropriate [HTTP methods](http://www.restapitutorial.com/lessons/httpmethods.html).
+
+You are responsible for taking it from there...
+
 ### App Meta data and inheritance
 
 An app folder can contain a `meta.js` file to define meta data for the app.
