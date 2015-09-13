@@ -269,14 +269,6 @@ module.exports = {
   type: 'list',
   page: {
     app: 'list'
-    pages: {
-      details: {
-        app: 'list/details'
-      },
-      feed: {
-        app: 'list/feed'
-      }      
-    }
   }
 }
 ```
