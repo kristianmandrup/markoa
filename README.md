@@ -185,7 +185,76 @@ The `methods` entry allows you to define REST endpoints for mutation actions suc
 
 You can however use more intuitive action names such as: `create`, `update` and `remove` and they will be mapped to the appropriate [HTTP methods](http://www.restapitutorial.com/lessons/httpmethods.html).
 
-You are responsible for taking it from there...
+You are responsible for taking it from there... (currently). We might add support for common REST patterns soon, such as `:id` for single item operations.
+
+### Custom routes
+
+*WIP: Coming soon*
+
+The app `index.js` will soon be enhanced with a routes section like this:
+
+```js
+// index.js
+module.exports = {
+  meta: require('./meta'),
+  data: require('./data'),
+  routes: require('./routes')
+}
+```
+
+The routes could be something like this. Any route patterns, such as `:id` will/should automatically be available to the template directly in the data in the `params` object, such as `data.params.id`.
+
+This is easily done since: *"Named route parameters are captured and added to ctx.params."*
+
+```js
+// routes.js
+module.exports = {
+  '.': 'app',
+  ':id': 'item',
+  '/list/:id': 'list'  
+}
+```
+
+We should also take advantage of Koa named routes ;)
+
+*Named routes*
+
+"Routes can optionally have names. This allows generation of URLs and easy renaming of URLs during development."
+
+```js
+router.get('user', '/users/:id', function *(next) {
+ // ...
+});
+
+router.url('user', 3);
+// => "/users/3"
+```
+
+We should also add built-in support for *Parameter middleware* as it is super powerful!!!
+
+```js
+router
+  .param('user', function *(id, next) {
+    this.user = users[id];
+    if (!this.user) return this.status = 404;
+    yield next;
+  })
+  .get('/users/:user', function *(next) {
+    this.body = this.user;
+  })
+  .get('/users/:user/friends', function *(next) {
+    this.body = yield this.user.getFriends();
+  })
+  // /users/3 => {"id": 3, "name": "Alex"}
+  // /users/3/friends => [{"id": 4, "name": "TJ"}]
+```
+
+We should make sure that routes are added via:
+
+```js
+app.use(router.routes());
+app.use(router.allowedMethods());
+```
 
 ### App Meta data and inheritance
 
