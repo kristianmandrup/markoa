@@ -138,99 +138,38 @@ This generator will create an app under `apps/[app-name]` similar to the default
 
 ### Sub pages
 
-*TODO: WIP*
+*Experimantal: WIP*
 
-Sometimes an app contains sub pages. To support this, markoa should be able to understand how to mount sub-routes for a given app. Only two levels are allowed and possible at this point.
+Sometimes an app contains sub pages. To support this, markoa can mount nested sub-routes for a given app. Each sub app will inherit from its parent app if it doesn't provide its own template, data, meta etc.
 
 ```
-/users
-  /page
-    app.jade
-    app.marko
-    /pages
-      details.jade
-      feed.jade
+/apps
+  /users
+    meta.js
+    index.js
 
-    /dependencies
-      app.browser.json
+    /apps
+      /details - nested app
+        /page
+          app.jade
+      /secret - nested app
+        meta.js
+        /data
+          index.js
+
+    /page
+      app.jade
+      app.marko
+
+      /dependencies
+        app.browser.json
 ```
 
-If a `/pages` folder exists, Markoa should add a route for each page there, such as `users/details` and `users/feed`. All pages for the app share the root page data by default, however the sub-pages can extend or override this data by a `page/pages` object where each entry is the data specific to a subpage. In short, the page found at `page/pages/details` will get the data from `page` extended (and potentially overwritten) by `page/pages/details`.
+If an app contains a nested `/apps` folder Markoa will create sub apps that are mounted as sub routes. All The sub-pages can extend or override the parent app properties, to provide its own data, template etc. if needed.
 
-```js
-module.exports = {
-  page: {
-    name: 'users',
-    title: 'Users',
-    pages: {
-      details: {
-        title: 'Detailed Users',
-        caption: 'Your favorites'
-      },
-      feed: {
-        // ...
-      }
-    }    
-  },
-}
-```
+#### Working example
 
-When the page `users/details` is rendered, it will get the data:
-
-```js
-{
-  name: 'users',
-  title: 'Detailed Users', // overrides
-  caption: 'Your favorites' // extends
-}
-```
-
-To achieve this we need to look in `app-config.js`
-
-```js
-config.app = new App(name, config);
-return {name: name, config: config};
-```
-
-in `Router`
-
-```js
-return function(pageName, config) {
-  log('create route', pageName, config);
-  let app = config.app;
-  let routeName = pageName;
-  ...
-  route(routeName, config);
-```
-
-and in `Route` where the GET route is added to the app
-
-```js
-let page = config.app;
-```
-
-`App` should return a nested collection of page configs instead of returning a single page config. This nested config should then be iterated and a route (with data etc.) generated for each.
-
-This infrastructure change has already been started in App in:
-
--	page/pages.js
--	resolver/index.js
--	resolver/pages/
-
-The `app` returned by the `App` constructor, now includes an `apps` entry. If we call `app.apps.sub()` we get the sub apps object for the app.
-
-For the router, we must return a nested set of routers, one for each nested sub app and not a single router!
-
-```js
-var router = function(pageName, config) {
-  log('create routes for app:', pageName);
-  let app = config.app;
-  console.log('routes', app.apps.sub());
-  ...
-}
-
-return router;
-```
+Currently a working example of using this infrastructure can be seen for the project page of [Repo Manager](https://github.com/kristianmandrup/repo-manager-v3)
 
 ### App Meta data and inheritance
 
