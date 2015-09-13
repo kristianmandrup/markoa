@@ -185,6 +185,32 @@ When the page `users/details` is rendered, it will get the data:
 }
 ```
 
+To achive this we need to look in `app-config.js`
+
+```js
+config.app = new App(name, config);
+return {name: name, config: config};
+```
+
+in `Router`
+
+```js
+return function(pageName, config) {
+  log('create route', pageName, config);
+  let app = config.app;
+  let routeName = pageName;
+  ...
+  route(routeName, config);
+```
+
+and in `Route` where the GET route is added to the app
+
+```js
+let page = config.app;
+```
+
+`App` should return a nested collection of page configs instead if a single page config. This nested config should then be iterated and a route (with data etc.) generated for each.
+
 ### App Meta data and inheritance
 
 An app folder can contain a `meta.js` file to define meta data for the app.
