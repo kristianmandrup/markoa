@@ -185,7 +185,7 @@ When the page `users/details` is rendered, it will get the data:
 }
 ```
 
-To achive this we need to look in `app-config.js`
+To achieve this we need to look in `app-config.js`
 
 ```js
 config.app = new App(name, config);
@@ -209,7 +209,15 @@ and in `Route` where the GET route is added to the app
 let page = config.app;
 ```
 
-`App` should return a nested collection of page configs instead if a single page config. This nested config should then be iterated and a route (with data etc.) generated for each.
+`App` should return a nested collection of page configs instead of returning a single page config. This nested config should then be iterated and a route (with data etc.) generated for each.
+
+This infrastructure change has already been started in App in:
+
+-	page/pages.js
+-	resolver/index.js
+-	resolver/pages/
+
+This needs a bit more work (~2-3 hrs estimate).
 
 ### App Meta data and inheritance
 
