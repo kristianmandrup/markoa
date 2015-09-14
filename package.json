@@ -1,6 +1,6 @@
 {
-  "name": "marooka",
-  "version": "0.2.2",
+  "name": "@kmandrup/marooka",
+  "version": "0.2.3",
   "description": "Marooka: Serving Content on Koa server with Marko and Lasso",
   "main": "index.js",
   "homepage": "https://github.com/kristianmandrup/markoa",

@@ -150,7 +150,7 @@ If an app contains a nested `/apps` folder Markoa will create sub apps that are 
 
 #### Working example
 
-Currently a working example of using this infrastructure can be seen for the project page of [Repo Manager](https://github.com/kristianmandrup/repo-manager-v3)
+Currently a working example using this infrastructure can be seen for the project page of [Repo Manager](https://github.com/kristianmandrup/repo-manager-v3)
 
 ### REST methods
 
@@ -216,9 +216,9 @@ module.exports = {
 }
 ```
 
-The routes could be something like this. Any route patterns, such as `:id` will/should automatically be available to the template directly in the data in the `params` object, such as `data.params.id`.
+The routes can be defined with paramssuch as `:id` which will automatically be available to the template directly in the data via. the `params` object, such as `data.params.id`.
 
-This is easily done since: *"Named route parameters are captured and added to ctx.params."*
+This is achieved via Koa *Named route parameters* which are automatically captured and added to `ctx.params`
 
 ```js
 // routes.js
@@ -233,9 +233,11 @@ module.exports = {
 }
 ```
 
-We should also take advantage of Koa named routes ;)
+#### Named routes
 
-*Named routes*
+*WIP*
+
+We will shortly add support for Koa named routes ;)
 
 "Routes can optionally have names. This allows generation of URLs and easy renaming of URLs during development."
 
@@ -248,7 +250,7 @@ router.url('user', 3);
 // => "/users/3"
 ```
 
-We should also add built-in support for *Parameter middleware* as it is super powerful!!!
+We will also add built-in support for *Parameter middleware* as it is super powerful!
 
 ```js
 router
@@ -267,7 +269,7 @@ router
   // /users/3/friends => [{"id": 4, "name": "TJ"}]
 ```
 
-We should make sure that routes are added via:
+Routes are added via:
 
 ```js
 app.use(router.routes());
@@ -339,23 +341,6 @@ module.exports = {
     app: 'list'
   }
 }
-```
-
-Since this pattern is so common you can do the shorthands:
-
-```js
-app: 'list'
-pages: {
-  details: {
-    app: ':details'
-  },
-```
-
-Or even shorter:
-
-```js
-app: 'list'
-pages: 'list' // or 'inherit' to use same inheritance as app
 ```
 
 ### Markoa Internals
