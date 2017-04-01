@@ -1,6 +1,8 @@
 Markoa
 ======
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/kristianmandrup/markoa.svg)](https://greenkeeper.io/)
+
 *Note: This project is referenced as `marooka` since `markoa` was already taken on `npm`*
 
 Markoa is a Full stack framework (mostly backend), for rapid prototyping of applications using mock data that can easily be replaced with real data sources etc.
